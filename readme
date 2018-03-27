@@ -1,0 +1,54 @@
+mod_AbsorptionFactorIN5.f90
+
+a fortran90 program of calculating absorption factors
+single crystal measurements at ILL-IN5
+make absorption correction to IN5 SPE file
+
+mod_AbsorptionFactorIN5.f90 : fortran90 source code
+
+
+#####
+HOW TO USE
+ read comment lines in mod_AbsorptionFactorIN5.f90
+ and see vectors.pdf
+
+
+#####
+test
+
+test_AbsorptionFactorIN5.f90 : test program
+
+AbsorptionFactorIN5_test_in         : test input  text
+AbsorptionFactorIN5_test_out        : test output text
+in5psd_568_192_120.par              : test input  par file
+sqw_133485_133485_568_192_120.spe   : test input  SPE file
+sqw_133485_133485_568_192_120AC.spe : test output SPE file
+
+#####
+test calculation
+
+par file = "in5psd_568_192_120.par"
+SPE file = "sqw_133485_133485_568_192_120.spe"
+absorption corrected SPE_file = "sqw_133485_133485_568_192_120AC.spe"
+
+compile and link: 
+ ifort -qopenmp -static -warn all -O -o test_AbsorptionFactorIN5static.ex mod_AbsorptionFactorIN5.f90 test_AbsorptionFactorIN5.f90
+ gfortran -fopenmp -Wall -O -o test_AbsorptionFactorIN5.ex mod_AbsorptionFactorIN5.f90 test_AbsorptionFactorIN5.f90
+
+run:
+ export OMP_NUM_THREADS=6
+ ./test_AbsorptionFactorIN5static.ex < AbsorptionFactorIN5_test_in > AbsorptionFactorIN5_test_out &
+
+#####
+ubuntu16.04
+
+ifort -qopenmp -static -warn all -O -o test_AbsorptionFactorIN5static.ex mod_AbsorptionFactorIN5.f90 test_AbsorptionFactorIN5.f90
+export OMP_NUM_THREADS=6
+time ./test_AbsorptionFactorIN5static.ex < AbsorptionFactorIN5_test_in > AbsorptionFactorIN5_test_out &
+
+real	16m41.584s
+user	97m21.725s
+sys	0m5.028s
+
+
+
